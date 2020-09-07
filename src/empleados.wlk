@@ -1,23 +1,14 @@
 object gimenez {
 	var fondoParaSueldos = 300000
-	const gananciaXEmpanada = 15
 	
 	method fondoParaSueldos() {
 		return fondoParaSueldos
 	}
-	method gananciaXEmpanada() {
-		return gananciaXEmpanada
-	}
 	
-	method pagarSueldo(persona, valor) {
-		if (valor == gananciaXEmpanada) {
-			persona.recibirSueldo(valor)
+	method pagarSueldo(persona) {
 			fondoParaSueldos -= persona.sueldo()
-		}else{
-			persona.recibirSueldo(valor)
-			fondoParaSueldos -= persona.sueldo()
-		}
-		
+			persona.recibirSueldo()
+				
 	}
 }
 
@@ -38,10 +29,9 @@ object galvan {
 	method deuda () {
 		return deuda
 	}
-	method recibirSueldo(valor) {
-		sueldo = valor
+	method recibirSueldo() {
 		if (deuda > 0) {
-			deuda -= valor
+			deuda -= sueldo
 			dinero -= deuda.min(0)
 			deuda = deuda.max(0)
 		}else{
@@ -60,21 +50,24 @@ object galvan {
 
 object baigorria {
 	var empanadasVendidas = 0
-	var sueldo = 0
 	var totalCobrado = 0
+	const gananciaPorEmpanada = 15
 	
 	method sueldo() {
-		return sueldo
+		return empanadasVendidas*gananciaPorEmpanada
 	}
 	method totalCobrado () {
 		return totalCobrado
 	}
+	method gananciaPorEmpanada() {
+		return gananciaPorEmpanada
+	}
+	
 	method venderEmpanadas(cantidad) {
 		empanadasVendidas += cantidad
 	}
-	method recibirSueldo(valor) {
-		sueldo = empanadasVendidas*valor
-		totalCobrado += sueldo
+	method recibirSueldo() {
+		totalCobrado += self.sueldo()
 		empanadasVendidas = 0
 	}
 }
